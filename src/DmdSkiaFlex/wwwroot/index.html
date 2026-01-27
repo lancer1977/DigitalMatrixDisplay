@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>DMD</title>
+  <style>
+    html, body { margin:0; padding:0; background: transparent; overflow:hidden; }
+    #wrap { width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; }
+    img { width:100%; height:100%; object-fit:contain; image-rendering: pixelated; }
+    .hud {
+      position: fixed; left: 8px; bottom: 8px;
+      font: 12px/1.2 system-ui, sans-serif;
+      background: rgba(0,0,0,0.35); color: #fff;
+      padding: 6px 8px; border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <img id="dmd" src="/frame.png?mode=pinball&scale=8" />
+  </div>
+  <div class="hud">/frame.png?mode=pinball|flat&amp;scale=8 (cache-busted)</div>
+
+  <script>
+    const img = document.getElementById("dmd");
+    const params = new URLSearchParams(location.search);
+    const mode = params.get("mode") || "pinball";
+    const scale = params.get("scale") || "8";
+
+    function tick() {
+      img.src = `/frame.png?mode=${encodeURIComponent(mode)}&scale=${encodeURIComponent(scale)}&ts=${Date.now()}`;
+    }
+    setInterval(tick, 33); // ~30fps
+  </script>
+</body>
+</html>
